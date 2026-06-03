@@ -1,3 +1,10 @@
+// Materia: Programación I, Paralelo 4 
+// Grupo: Numero 4. 
+// Autor: Alan Samir Garcia.
+//Angel Amaru Llojlla.
+//Julio Rodriguez Marca.
+// Fecha creación: 27-05-2026 
+// Sistema de Habilitación UCB
 #include <iostream>
 using namespace std;
 struct structPostulante {
