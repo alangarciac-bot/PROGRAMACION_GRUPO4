@@ -1,5 +1,5 @@
 // Autor: Angel Jose Amaru Llojlla
-
+// Parte A
 
 void listarControlHabilitacion() {
     ifstream archivoEst("ESTUDIANTES.BIN", ios::binary);
