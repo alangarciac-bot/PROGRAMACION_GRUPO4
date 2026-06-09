@@ -1,37 +1,64 @@
-// Autor: Angel Jose Amaru Llojlla
-// Parte A
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <iomanip>
+#include "estructuras.h"
+#include "Angel.h"
 
-void listarControlHabilitacion() {
+using namespace std;
+
+// Función auxiliar para buscar las notas de un estudiante en el archivo NOTAS.BIN
+bool buscarNotasEstudiante(int ciBuscado, NotasPostulante& notasEncontradas) {
+    ifstream archivoNotas("NOTAS.BIN", ios::binary);
+    if (!archivoNotas) {
+        return false;
+    }
+    
+    NotasPostulante temporal;
+    while (archivoNotas.read(reinterpret_cast<char*>(&temporal), sizeof(NotasPostulante))) {
+        if (temporal.ci == ciBuscado) {
+            notasEncontradas = temporal;
+            archivoNotas.close();
+            return true;
+        }
+    }
+    archivoNotas.close();
+    return false;
+}
+
+// Función principal adaptada para el menú
+void generarReporteHabilitacion() {
     ifstream archivoEst("ESTUDIANTES.BIN", ios::binary);
     if (!archivoEst) {
         cout << "\nNo existen estudiantes registrados en el sistema." << endl;
         return;
     }
 
-    structPostulante est;
+    Postulante est;
     double sumaNotasHabilitacionTotal = 0;
     int contadorEstudiantesConNotas = 0;
 
     // Vectores temporales para separar a los estudiantes en pantalla según las reglas del proyecto
-    vector<structPostulante> listaCasoA;
-    vector<structNotasHabilitacion> notasCasoA;
+    vector<Postulante> listaCasoA;
+    vector<NotasPostulante> notasCasoA;
     vector<double> promediosCasoA;
 
-    vector<structPostulante> listaCasoB;
-    vector<structNotasHabilitacion> notasCasoB;
+    vector<Postulante> listaCasoB;
+    vector<NotasPostulante> notasCasoB;
     vector<double> promediosCasoB;
 
     // 1. Clasificar a los estudiantes
-    while (archivoEst.read(reinterpret_cast<char*>(&est), sizeof(structPostulante))) {
-        structNotasHabilitacion notas;
+    while (archivoEst.read(reinterpret_cast<char*>(&est), sizeof(Postulante))) {
+        NotasPostulante notas;
+        // Llama a la función auxiliar para traer sus notas
         if (buscarNotasEstudiante(est.ci, notas)) {
             // Calcular promedio aritmético: (N1 + N2 + N3) / 3
-            double promedio = (notas.n1 + notas.n2 + notas.n3) / 3.0;
+            double promedio = (notas.nota1 + notas.nota2 + notas.nota3) / 3.0;
             sumaNotasHabilitacionTotal += promedio;
             contadorEstudiantesConNotas++;
 
             // Condición, Nota >= 60 en todas las evaluaciones
-            if (notas.n1 >= 60 && notas.n2 >= 60 && notas.n3 >= 60) {
+            if (notas.nota1 >= 60 && notas.nota2 >= 60 && notas.nota3 >= 60) {
                 listaCasoA.push_back(est);
                 notasCasoA.push_back(notas);
                 promediosCasoA.push_back(promedio);
@@ -71,10 +98,6 @@ void listarControlHabilitacion() {
     if (listaCasoA.empty()) {
         cout << " No se encontraron estudiantes en esta condicion." << endl;
     }
-}
-
-
-
 
     // ============================================================================
     // CASO B: Estudiantes No Habilitados (Una o mas notas individuales < 60)
@@ -102,9 +125,9 @@ void listarControlHabilitacion() {
         
         // Detalle de notas individuales para justificar el estado en el reporte
         cout << "   -> [Detalle Notas Parciales: " 
-             << "N1: " << notasCasoB[i].n1 << ", "
-             << "N2: " << notasCasoB[i].n2 << ", "
-             << "N3: " << notasCasoB[i].n3 << "]" << endl;
+             << "N1: " << notasCasoB[i].nota1 << ", "
+             << "N2: " << notasCasoB[i].nota2 << ", "
+             << "N3: " << notasCasoB[i].nota3 << "]" << endl;
         cout << "   -> [MOTIVO: NOTA INDIVIDUAL < 60]" << endl;
         cout << "-----------------------------------------------------------------------------------------" << endl;
     }
@@ -118,8 +141,9 @@ void listarControlHabilitacion() {
     cout << "\n=========================================================================================" << endl;
     if (contadorEstudiantesConNotas > 0) {
         double promedioGeneralCurso = sumaNotasHabilitacionTotal / contadorEstudiantesConNotas;
-        cout << " PROMEDIO GENERAL DE NOTAS DE HABILITACION DEL CURSO: " << fixed << setprecision(2) << promedioGeneralCurso << " Bs." << endl;
+        cout << " PROMEDIO GENERAL DE NOTAS DE HABILITACION DEL CURSO: " << fixed << setprecision(2) << promedioGeneralCurso << endl;
     } else {
         cout << " PROMEDIO GENERAL DE NOTAS DE HABILITACION DEL CURSO: 0.00" << endl;
     }
     cout << "=========================================================================================" << endl;
+}
