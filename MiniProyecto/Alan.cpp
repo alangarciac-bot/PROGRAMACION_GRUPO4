@@ -6,9 +6,7 @@
 
 using namespace std;
 
-// ==========================================
 // OPCIÓN 4 ADICIONAR NOTAS Y borrar anteriores
-// ==========================================
 void adicionarNotas()
 {
     int ciBuscado;
@@ -18,7 +16,7 @@ void adicionarNotas()
     cout << "Ingrese el CI del estudiante para anadir notas: ";
     cin >> ciBuscado;
 
-    // Verificar si el estudiante existe
+    // se verifica si el estudiante existe
     ifstream archivoEst("ESTUDIANTES.BIN", ios::in | ios::binary);
     if (archivoEst.is_open())
     {
