@@ -72,3 +72,54 @@ void listarControlHabilitacion() {
         cout << " No se encontraron estudiantes en esta condicion." << endl;
     }
 }
+
+
+
+
+    // ============================================================================
+    // CASO B: Estudiantes No Habilitados (Una o mas notas individuales < 60)
+    // ============================================================================
+    cout << "\n=========================================================================================" << endl;
+    cout << "   CASO B: ESTUDIANTES CON UNA O MAS NOTAS INDIVIDUALES < 60 (NO HABILITADOS)" << endl;
+    cout << "=========================================================================================" << endl;
+    cout << setw(10) << left << "CARNET" 
+         << setw(15) << left << "NOMBRES" 
+         << setw(15) << left << "APELLIDOS" 
+         << setw(20) << left << "MATERIA" 
+         << setw(10) << left << "PARALELO" 
+         << setw(20) << left << "NOTA HABILITACION" 
+         << setw(12) << left << "ESTADO" << endl;
+    cout << "-----------------------------------------------------------------------------------------" << endl;
+
+    for (size_t i = 0; i < listaCasoB.size(); i++) {
+        cout << setw(10) << left << listaCasoB[i].ci 
+             << setw(15) << left << listaCasoB[i].nombres 
+             << setw(15) << left << listaCasoB[i].apellidos 
+             << setw(20) << left << listaCasoB[i].materia 
+             << setw(10) << left << listaCasoB[i].paralelo 
+             << setw(20) << left << fixed << setprecision(2) << promediosCasoB[i] 
+             << setw(12) << left << "NO HABILITADO" << endl;
+        
+        // Detalle de notas individuales para justificar el estado en el reporte
+        cout << "   -> [Detalle Notas Parciales: " 
+             << "N1: " << notasCasoB[i].n1 << ", "
+             << "N2: " << notasCasoB[i].n2 << ", "
+             << "N3: " << notasCasoB[i].n3 << "]" << endl;
+        cout << "   -> [MOTIVO: NOTA INDIVIDUAL < 60]" << endl;
+        cout << "-----------------------------------------------------------------------------------------" << endl;
+    }
+    if (listaCasoB.empty()) {
+        cout << " No se encontraron estudiantes en esta condicion." << endl;
+    }
+
+    // ============================================================================
+    // REPORTE FINAL CONSOLIDADO (PROMEDIO GENERAL DEL CURSO)
+    // ============================================================================
+    cout << "\n=========================================================================================" << endl;
+    if (contadorEstudiantesConNotas > 0) {
+        double promedioGeneralCurso = sumaNotasHabilitacionTotal / contadorEstudiantesConNotas;
+        cout << " PROMEDIO GENERAL DE NOTAS DE HABILITACION DEL CURSO: " << fixed << setprecision(2) << promedioGeneralCurso << " Bs." << endl;
+    } else {
+        cout << " PROMEDIO GENERAL DE NOTAS DE HABILITACION DEL CURSO: 0.00" << endl;
+    }
+    cout << "=========================================================================================" << endl;
