@@ -7,7 +7,7 @@
 
 using namespace std;
 
-// Función auxiliar para buscar las notas de un estudiante en el archivo NOTAS.BIN
+// Notas de un estudiante
 bool buscarNotasEstudiante(int ciBuscado, NotasPostulante& notasEncontradas) {
     ifstream archivoNotas("NOTAS.BIN", ios::binary);
     if (!archivoNotas) {
@@ -26,7 +26,7 @@ bool buscarNotasEstudiante(int ciBuscado, NotasPostulante& notasEncontradas) {
     return false;
 }
 
-// Función principal adaptada para el menú
+// Adaptacion para el menú
 void generarReporteHabilitacion() {
     ifstream archivoEst("ESTUDIANTES.BIN", ios::binary);
     if (!archivoEst) {
@@ -38,7 +38,7 @@ void generarReporteHabilitacion() {
     double sumaNotasHabilitacionTotal = 0;
     int contadorEstudiantesConNotas = 0;
 
-    // Vectores temporales para separar a los estudiantes en pantalla según las reglas del proyecto
+    // Separacion de los estudiantes
     vector<Postulante> listaCasoA;
     vector<NotasPostulante> notasCasoA;
     vector<double> promediosCasoA;
@@ -47,17 +47,17 @@ void generarReporteHabilitacion() {
     vector<NotasPostulante> notasCasoB;
     vector<double> promediosCasoB;
 
-    // 1. Clasificar a los estudiantes
+    // 1. Clasificacio de los estudiantes
     while (archivoEst.read(reinterpret_cast<char*>(&est), sizeof(Postulante))) {
         NotasPostulante notas;
-        // Llama a la función auxiliar para traer sus notas
+        
         if (buscarNotasEstudiante(est.ci, notas)) {
-            // Calcular promedio aritmético: (N1 + N2 + N3) / 3
+            // Calcular el promedio
             double promedio = (notas.nota1 + notas.nota2 + notas.nota3) / 3.0;
             sumaNotasHabilitacionTotal += promedio;
             contadorEstudiantesConNotas++;
 
-            // Condición, Nota >= 60 en todas las evaluaciones
+            // Nota >= 60 en todas las evaluaciones
             if (notas.nota1 >= 60 && notas.nota2 >= 60 && notas.nota3 >= 60) {
                 listaCasoA.push_back(est);
                 notasCasoA.push_back(notas);
@@ -71,9 +71,13 @@ void generarReporteHabilitacion() {
     }
     archivoEst.close();
 
+
+    
     // ============================================================================
     // CASO A: Estudiantes Habilitados (Todas las notas individuales >= 60)
     // ============================================================================
+
+    
     cout << "\n=========================================================================================" << endl;
     cout << "   CASO A: ESTUDIANTES CON TODAS LAS NOTAS INDIVIDUALES >= 60 (HABILITADOS)" << endl;
     cout << "=========================================================================================" << endl;
@@ -102,6 +106,9 @@ void generarReporteHabilitacion() {
     // ============================================================================
     // CASO B: Estudiantes No Habilitados (Una o mas notas individuales < 60)
     // ============================================================================
+
+
+    
     cout << "\n=========================================================================================" << endl;
     cout << "   CASO B: ESTUDIANTES CON UNA O MAS NOTAS INDIVIDUALES < 60 (NO HABILITADOS)" << endl;
     cout << "=========================================================================================" << endl;
@@ -123,7 +130,7 @@ void generarReporteHabilitacion() {
              << setw(20) << left << fixed << setprecision(2) << promediosCasoB[i] 
              << setw(12) << left << "NO HABILITADO" << endl;
         
-        // Detalle de notas individuales para justificar el estado en el reporte
+        // Notas Individuales de cada estudiante
         cout << "   -> [Detalle Notas Parciales: " 
              << "N1: " << notasCasoB[i].nota1 << ", "
              << "N2: " << notasCasoB[i].nota2 << ", "
@@ -138,6 +145,8 @@ void generarReporteHabilitacion() {
     // ============================================================================
     // REPORTE FINAL CONSOLIDADO (PROMEDIO GENERAL DEL CURSO)
     // ============================================================================
+
+    
     cout << "\n=========================================================================================" << endl;
     if (contadorEstudiantesConNotas > 0) {
         double promedioGeneralCurso = sumaNotasHabilitacionTotal / contadorEstudiantesConNotas;
