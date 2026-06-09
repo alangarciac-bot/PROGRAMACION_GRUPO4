@@ -1,74 +1,67 @@
-// Materia: Programación I, Paralelo 4 
-// Grupo: Numero 4. 
-// Autor: Alan Samir Garcia.
-//Angel Amaru Llojlla.
-//Julio Rodriguez Marca.
-// Fecha creación: 27-05-2026 
-// Sistema de Habilitación UCB
 #include <iostream>
-using namespace std;
-struct structPostulante {
-    int ci;
-    char nombres[30];
-    char apellidos[30];
-    char materia[30];
-    int paralelo;
-};
+#include <cstdlib>
+#include "estructuras.h"
+#include "Julio.h"
+#include "Angel.h"
+#include "Alan.h"
 
-void adicionarEstudiante();
-void listadoControlHabilitacion();
-void eliminarEstudiante();
-void adicionarNotasHabilitacion();
+using namespace std;
 
 int main() {
     int opcion;
-    
-    do {
+    bool salir = false;
+
+    while (!salir) {
+        system("cls");
+        
+        cout << "==========================================================" << endl;
+        cout << "      SISTEMA DE CONTROL DE HABILITACION - UCB" << endl;
+        cout << "==========================================================" << endl;
         cout << "1. Adicionar Estudiante" << endl;
         cout << "2. Listado de Control de Habilitacion" << endl;
         cout << "3. Eliminar Estudiante" << endl;
         cout << "4. Adicionar Notas de Habilitacion" << endl;
-        cout << "5. Salir del sistema" << endl;
+        cout << "5. Salir del Sistema" << endl;
+        cout << "==========================================================" << endl;
         cout << "Ingrese una opcion: ";
         cin >> opcion;
-        
-        switch(opcion) {
+
+        switch (opcion) {
             case 1:
-                adicionarEstudiante();
+                cout << "\n--- ADICIONAR ESTUDIANTE ---" << endl;
+                adicionarEstudiante(); 
                 break;
+            
             case 2:
-                listadoControlHabilitacion();
+                cout << "\n--- REPORTE DE HABILITACION ---" << endl;
+                generarReporteHabilitacion(); 
                 break;
+            
             case 3:
-                eliminarEstudiante();
+                cout << "\n--- ELIMINAR ESTUDIANTE ---" << endl;
+                eliminarEstudiante(); 
                 break;
+            
             case 4:
-                adicionarNotasHabilitacion();
+                cout << "\n--- ADICIONAR NOTAS ---" << endl;
+                adicionarNotas(); 
                 break;
+            
             case 5:
-                cout << "Saliendo del sistema." << endl;
+                cout << "\nSaliendo del sistema..." << endl;
+                salir = true;
                 break;
+            
             default:
-                cout << "Error: Intente nuevamente." << endl;
+                cout << "\nOpcion invalida. Intente de nuevo." << endl;
+                break;
         }
-    } while(opcion != 5);
+        if (!salir) {
+            cout << "\nPresione Enter para continuar...";
+            cin.ignore();
+            cin.get();
+        }
+    }
+
     return 0;
-}
-void adicionarEstudiante() {
-    
-    cout << "Adicionar Estudiante" << endl;
-}
-
-void listadoControlHabilitacion() {
-
-    cout << "Listado de Control" << endl;
-}
-
-void eliminarEstudiante() {
-    cout << "Eliminar Estudiante" << endl;
-}
-
-void adicionarNotasHabilitacion() {
-
-    cout << "Adicionar Notas" << endl;
 }
