@@ -1,3 +1,6 @@
+//g++ *.cpp -o ProyectoPrincipal
+//.\ProyectoPrincipal
+
 // Materia: Programación I, Paralelo 4
 
 // Grupo: 4
