@@ -1,3 +1,13 @@
+// Materia: Programación I, Paralelo 4
+
+// Grupo: 4
+
+// Autor: Alan Samir Garcia Condori 
+
+// Fecha creación: 09/06/2026
+
+// Nombre del Miniproyecto: Sistema de Habilitación UCB
+
 #include <iostream>
 #include <fstream>
 #include <cstdio> // Para usar remove() y rename()
