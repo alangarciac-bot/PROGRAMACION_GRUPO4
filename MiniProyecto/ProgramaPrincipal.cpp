@@ -1,3 +1,12 @@
+// Materia: Programación I, Paralelo 4
+
+// Grupo: 4
+
+// Autor:  Julio Angel Rodriguez Marca
+
+// Fecha creación: 07/06/2026
+
+// Nombre del Miniproyecto: Sistema de Habilitación UCB
 #include <iostream>
 #include <cstdlib>
 #include "estructuras.h"
